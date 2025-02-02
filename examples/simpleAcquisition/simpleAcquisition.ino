@@ -5,6 +5,7 @@
 JARVIS_VL53L7CX Imageur(&Wire, VL53L7CX_PIN_LPn, VL53L7CX_PIN_RST);
 
 uint8_t Imageurresolution = 16;
+VL53L7CX_ResultsData ImageurmeasurementData;
   
 void setup() {
   Serial.begin(115200);
