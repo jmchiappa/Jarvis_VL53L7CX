@@ -17,10 +17,27 @@ class JARVIS_VL53L7CX : public VL53L7CX {
       return false;
     }
 
-    uint8_t getResolution() {
-      uint8_t res;
-      this->vl53l7cx_get_resolution(&res);
-      return res;
+    void setResolution(uint8_t res) {
+      this->vl53l7cx_set_resolution(res);
+      this->resolution = res;
     }
+
+    uint8_t getResolution() {
+      if(this->resolution == 0) {
+        uint8_t status = this->vl53l7cx_get_resolution(&resolution);
+        if(status == 0 && resolution == 0 ) {
+          return 16;
+        }
+      }
+      return this->resolution;
+    }
+
+    uint8_t nbRow() {
+      uint8_t res = getResolution();
+      return res==16 ? 4 : 8;
+    }
+
+  private:
+    uint8_t resolution = 0;
 };
 #endif
